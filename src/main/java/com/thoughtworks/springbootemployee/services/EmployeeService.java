@@ -28,6 +28,6 @@ public class EmployeeService {
     }
 
     public Employee update(Integer id, Employee employee) {
-        return null;
+        return employeeRepository.update(id, employee);
     }
 }
