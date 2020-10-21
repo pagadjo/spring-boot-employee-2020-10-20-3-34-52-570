@@ -115,11 +115,11 @@ class CompanyServiceTest {
         company.addEmployee(secondEmployee);
 
         Company expectedCompany = new Company(1, "OOIL");
-        company.addEmployee(firstEmployee);
-        company.addEmployee(secondEmployee);
+        expectedCompany.addEmployee(firstEmployee);
+        expectedCompany.addEmployee(secondEmployee);
 
         CompanyRepository companyRepository = mock(CompanyRepository.class);
-        when(companyRepository.update(company.getId(), company)).thenReturn(expectedCompany);
+        when(companyRepository.update(company.getId(), expectedCompany)).thenReturn(expectedCompany);
         CompanyService companyService = new CompanyService(companyRepository);
 
         //when
