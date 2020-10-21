@@ -22,4 +22,8 @@ public class EmployeeService {
     public Employee create(Employee newEmployee) {
         return employeeRepository.create(newEmployee);
     }
+
+    public Employee searchById(Integer id) {
+        return null;
+    }
 }

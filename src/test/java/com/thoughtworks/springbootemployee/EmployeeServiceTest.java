@@ -9,6 +9,8 @@ import org.mockito.Mockito;
 
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.when;
 
 class EmployeeServiceTest {
@@ -40,5 +42,21 @@ class EmployeeServiceTest {
 
         //then
         Assertions.assertEquals(1, employee.getId());
+    }
+
+    @Test
+    void should_return_employee_when_searchById_given_employee_with_id_of_1(){
+        //given
+        Employee employee = new Employee(1, "", 20, "male", 1000);
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        when(repository.findById(employee.getId())).thenReturn(employee);
+        EmployeeService employeeService = new EmployeeService(repository);
+
+        //when
+        Employee fetchedEmployee = employeeService.searchById(employee.getId());
+
+        //then
+        assertNotNull(employee);
+        assertSame(employee,fetchedEmployee);
     }
 }
