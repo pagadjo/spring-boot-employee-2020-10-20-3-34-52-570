@@ -3,12 +3,12 @@ package com.thoughtworks.springbootemployee;
 import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.EmployeeRepository;
 import com.thoughtworks.springbootemployee.services.EmployeeService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.when;
@@ -26,7 +26,7 @@ class EmployeeServiceTest {
         Integer employeeCount = employeeService.getAll().size();
 
         //then
-        Assertions.assertEquals(2, employeeCount);
+        assertEquals(2, employeeCount);
     }
 
     @Test
@@ -41,11 +41,11 @@ class EmployeeServiceTest {
         Employee employee = employeeService.create(newEmployee);
 
         //then
-        Assertions.assertEquals(1, employee.getId());
+        assertEquals(1, employee.getId());
     }
 
     @Test
-    void should_return_employee_when_searchById_given_employee_with_id_of_1(){
+    void should_return_employee_when_searchById_given_employee_with_id_of_1() {
         //given
         Employee employee = new Employee(1, "", 20, "male", 1000);
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
@@ -57,6 +57,6 @@ class EmployeeServiceTest {
 
         //then
         assertNotNull(employee);
-        assertSame(employee,fetchedEmployee);
+        assertSame(employee, fetchedEmployee);
     }
 }
