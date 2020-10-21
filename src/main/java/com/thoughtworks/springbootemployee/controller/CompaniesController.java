@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,6 +41,7 @@ public class CompaniesController {
 
     @GetMapping("/{companyId}")
     public Company searchById(@PathVariable("companyId") Integer companyId) {
+
         return companyService.searchById(companyId);
     }
 
@@ -56,5 +58,11 @@ public class CompaniesController {
     @DeleteMapping("/{companyId}")
     public void delete(@PathVariable("companyId") Integer companyId) {
         companyService.delete(companyId);
+    }
+
+    @GetMapping(params = {"page", "pageSize"})
+    public List<Company> getCompaniesByPageAndPageSize(@RequestParam("page") Integer page,
+                                              @RequestParam("pageSize") Integer pageSize) {
+        return companyService.getCompaniesByPageAndPageSize(page, pageSize);
     }
 }
