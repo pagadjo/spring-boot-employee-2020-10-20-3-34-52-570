@@ -112,7 +112,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_2_employees_when_getByEmployeeByPage_given_5_employees_page_1_and_pageSize_2() {
+    void should_return_2_employees_when_getByEmployeeByPage_given_2_employees_page_1_and_pageSize_2() {
         //given
         Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000);
         Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
