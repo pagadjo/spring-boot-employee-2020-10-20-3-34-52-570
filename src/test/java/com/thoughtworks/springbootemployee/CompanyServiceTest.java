@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class CompanyServiceTest {
@@ -129,4 +131,20 @@ class CompanyServiceTest {
         assertSame(expectedCompany, updatedCompany);
         assertEquals(2, updatedCompany.getEmployeeNumber());
     }
+
+    @Test
+    void should_trigger_repository_delete_once_when_service_delete_called_given_company_id() {
+        //given
+        Company company = new Company(1, "OOCL");
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+
+        CompanyService companyService = new CompanyService(companyRepository);
+
+        //when
+        companyService.delete(company.getId());
+
+        //then
+        verify(companyRepository, times(1)).delete(1);
+    }
+
 }
