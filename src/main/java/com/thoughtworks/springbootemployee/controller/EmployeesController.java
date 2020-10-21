@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
@@ -57,5 +59,12 @@ public class EmployeesController {
         employees.stream()
                 .filter(employee -> employee.getId().equals(employeeId))
                 .findFirst().ifPresent(employees::remove);
+    }
+
+    @GetMapping(params = "gender")
+    public List<Employee> getByGender(@RequestParam("gender") String gender) {
+        return employees.stream()
+                .filter(employee -> employee.getGender().equalsIgnoreCase(gender))
+                .collect(Collectors.toList());
     }
 }
