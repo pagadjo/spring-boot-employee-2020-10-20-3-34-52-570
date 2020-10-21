@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.models.Company;
+import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.CompanyRepository;
 import com.thoughtworks.springbootemployee.services.CompanyService;
 import org.junit.jupiter.api.Test;
@@ -43,4 +44,23 @@ class CompanyServiceTest {
         assertSame(newCompany, company);
     }
 
+    @Test
+    void should_return_company_with_name_OOCL_employees_2_employeesNumber_2_when_create_given_company_with_name_OOCL_employees_2() {
+        //given
+        Company newCompany = new Company("OOCL");
+        newCompany.addEmployee(new Employee());
+        newCompany.addEmployee(new Employee());
+
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        when(companyRepository.create(newCompany)).thenReturn(newCompany);
+        CompanyService companyService = new CompanyService(companyRepository);
+
+        //when
+        Company company = companyService.create(newCompany);
+
+        //then
+        assertEquals("OOCL", company.getCompanyName());
+        assertSame(newCompany, company);
+        assertEquals(2, company.getEmployeeNumber());
+    }
 }
