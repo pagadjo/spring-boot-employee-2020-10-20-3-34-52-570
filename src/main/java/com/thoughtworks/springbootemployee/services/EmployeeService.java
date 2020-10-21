@@ -2,9 +2,11 @@ package com.thoughtworks.springbootemployee.services;
 
 import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.EmployeeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
