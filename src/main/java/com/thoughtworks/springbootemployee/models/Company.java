@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
+
     private String companyName;
     private List<Employee> employees = new ArrayList<>();
 
     public Company() {
     }
 
-    public Company(String companyName) {
+    public Company(Integer id, String companyName) {
         this.companyName = companyName;
     }
 
@@ -32,5 +33,9 @@ public class Company {
 
     public int getEmployeeNumber() {
         return employees.size();
+    }
+
+    public Integer getId() {
+        return 0;
     }
 }

@@ -19,4 +19,8 @@ public class CompanyRepository {
         companies.add(newCompany);
         return newCompany;
     }
+
+    public Company findById(Integer id) {
+        return null;
+    }
 }
