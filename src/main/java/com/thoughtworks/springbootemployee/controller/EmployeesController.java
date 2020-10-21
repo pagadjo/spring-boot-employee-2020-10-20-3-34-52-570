@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.models.Employee;
+import com.thoughtworks.springbootemployee.services.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +23,15 @@ import java.util.stream.Collectors;
 public class EmployeesController {
 
     private static final List<Employee> employees = new ArrayList<>();
+    private final EmployeeService employeeService;
+
+    public EmployeesController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping
     public List<Employee> getAll() {
-        return employees;
+        return employeeService.getAll();
     }
 
     @PostMapping
