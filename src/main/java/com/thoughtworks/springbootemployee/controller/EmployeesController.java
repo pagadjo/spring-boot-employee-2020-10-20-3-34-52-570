@@ -72,7 +72,7 @@ public class EmployeesController {
     public List<Employee> getByEmployeeByPage(@RequestParam("page") Integer page,
                                               @RequestParam("pageSize") Integer pageSize) {
         return employees.stream()
-                .skip(page - 1)
+                .skip(pageSize * (page - 1))
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
