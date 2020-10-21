@@ -43,6 +43,6 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeByPageAndPageSize(int page, int pageSize) {
-        return null;
+        return employeeRepository.findByPageAndPageSize(page, pageSize);
     }
 }
