@@ -27,10 +27,10 @@ class CompanyServiceTest {
         CompanyService companyService = new CompanyService(companyRepository);
 
         //when
-        Integer employeeCount = companyService.getAll().size();
+        Integer companyCount = companyService.getAll().size();
 
         //then
-        assertEquals(2, employeeCount);
+        assertEquals(2, companyCount);
     }
 
     @Test
