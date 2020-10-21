@@ -43,10 +43,4 @@ public class EmployeeRepository {
                 .findFirst().ifPresent(employees::remove);
     }
 
-    public List<Employee> findByPageAndPageSize(int page, int pageSize) {
-        return employees.stream()
-                .skip(pageSize * (page - 1))
-                .limit(pageSize)
-                .collect(Collectors.toList());
-    }
 }

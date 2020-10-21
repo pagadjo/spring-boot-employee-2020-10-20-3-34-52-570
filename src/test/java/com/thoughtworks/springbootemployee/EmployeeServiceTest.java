@@ -118,7 +118,7 @@ class EmployeeServiceTest {
         Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
         int page = 1, pageSize = 2;
         EmployeeRepository repository = mock(EmployeeRepository.class);
-        when(repository.findByPageAndPageSize(page, pageSize)).thenReturn(asList(firstEmployee, secondEmployee));
+        when(repository.getAll()).thenReturn(asList(firstEmployee, secondEmployee));
         EmployeeService employeeService = new EmployeeService(repository);
 
         //when
@@ -136,7 +136,7 @@ class EmployeeServiceTest {
         Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
         int page = 1, pageSize = 5;
         EmployeeRepository repository = mock(EmployeeRepository.class);
-        when(repository.findByPageAndPageSize(page, pageSize)).thenReturn(asList(firstEmployee, secondEmployee));
+        when(repository.getAll()).thenReturn(asList(firstEmployee, secondEmployee));
         EmployeeService employeeService = new EmployeeService(repository);
 
         //when
@@ -146,4 +146,5 @@ class EmployeeServiceTest {
         assertEquals(2, fetchedEmployees.size());
 
     }
+    
 }

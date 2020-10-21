@@ -43,6 +43,9 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeByPageAndPageSize(int page, int pageSize) {
-        return employeeRepository.findByPageAndPageSize(page, pageSize);
+        return employeeRepository.getAll().stream()
+                .skip(pageSize * (page - 1))
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
