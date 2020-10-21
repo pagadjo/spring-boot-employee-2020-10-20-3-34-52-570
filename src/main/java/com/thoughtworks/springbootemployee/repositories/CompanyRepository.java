@@ -21,6 +21,9 @@ public class CompanyRepository {
     }
 
     public Company findById(Integer id) {
-        return null;
+        return companies.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 }
