@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -37,5 +38,16 @@ public class EmployeesController {
                 .filter(employee -> employee.getId().equals(employeeId))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @PutMapping("/{employeeId}")
+    public Employee update(@PathVariable("employeeId") String employeeId, @RequestBody Employee updatedEmployee) {
+        employees.stream()
+                .filter(employee -> employee.getId().equals(employeeId))
+                .findFirst().ifPresent(employee -> {
+                    employees.remove(employee);
+                    employees.add(updatedEmployee);
+                });
+        return updatedEmployee;
     }
 }
