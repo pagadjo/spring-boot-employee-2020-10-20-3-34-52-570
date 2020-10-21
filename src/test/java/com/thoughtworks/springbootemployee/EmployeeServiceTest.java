@@ -4,7 +4,6 @@ import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.EmployeeRepository;
 import com.thoughtworks.springbootemployee.services.EmployeeService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.List;
@@ -90,7 +89,24 @@ class EmployeeServiceTest {
         //when
         employeeService.delete(employee.getId());
         //then
-        verify(repository,times(1)).delete(1);
+        verify(repository, times(1)).delete(1);
+    }
+
+    @Test
+    void should_return_2_male_employee_when_getByGender_given_2_male_1_female() {
+        //given
+        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000);
+        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
+        Employee thirdEmployee = new Employee(3, "Lisa", 20, "female", 1000);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
+        when(repository.getAll()).thenReturn(Arrays.asList(firstEmployee, secondEmployee, thirdEmployee));
+        EmployeeService employeeService = new EmployeeService(repository);
+
+        //when
+        List<Employee> employees = employeeService.searchByGender("male");
+
+        //then
+        assertEquals(2, employees.size());
     }
 
 }

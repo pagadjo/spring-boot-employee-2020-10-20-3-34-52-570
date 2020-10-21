@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -33,5 +34,9 @@ public class EmployeeService {
 
     public void delete(Integer id) {
         employeeRepository.delete(id);
+    }
+
+    public List<Employee> searchByGender(String gender) {
+        return null;
     }
 }
