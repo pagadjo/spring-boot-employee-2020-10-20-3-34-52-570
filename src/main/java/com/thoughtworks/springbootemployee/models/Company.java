@@ -3,6 +3,9 @@ package com.thoughtworks.springbootemployee.models;
 public class Company{
     private String name;
 
+    public Company() {
+    }
+
     public Company(String name) {
         this.name = name;
     }
