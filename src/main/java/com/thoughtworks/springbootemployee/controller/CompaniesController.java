@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.models.Company;
 import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.services.CompanyService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,17 +39,22 @@ public class CompaniesController {
     }
 
     @GetMapping("/{companyId}")
-    public Company searchById(@PathVariable("companyId") Integer companyId){
+    public Company searchById(@PathVariable("companyId") Integer companyId) {
         return companyService.searchById(companyId);
     }
 
     @GetMapping("/{companyId}/employees")
-    public List<Employee> getEmployeesByCompanyId(@PathVariable("companyId") Integer companyId){
+    public List<Employee> getEmployeesByCompanyId(@PathVariable("companyId") Integer companyId) {
         return companyService.getEmployeesByCompanyId(companyId);
     }
 
     @PutMapping("/{companyId}")
     public Company update(@PathVariable("companyId") Integer companyId, @RequestBody Company updatedCompany) {
         return companyService.update(companyId, updatedCompany);
+    }
+
+    @DeleteMapping("/{companyId}")
+    public void delete(@PathVariable("companyId") Integer companyId) {
+        companyService.delete(companyId);
     }
 }
