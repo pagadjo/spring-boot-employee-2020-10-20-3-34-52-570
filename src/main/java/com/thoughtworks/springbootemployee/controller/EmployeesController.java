@@ -51,10 +51,8 @@ public class EmployeesController {
     }
 
     @DeleteMapping("/{employeeId}")
-    public void delete(@PathVariable("employeeId") String employeeId) {
-        employees.stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst().ifPresent(employees::remove);
+    public void delete(@PathVariable("employeeId") Integer employeeId) {
+        employeeService.delete(employeeId);
     }
 
     @GetMapping(params = "gender")
