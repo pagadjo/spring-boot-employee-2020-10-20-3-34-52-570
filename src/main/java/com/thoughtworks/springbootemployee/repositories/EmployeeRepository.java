@@ -15,6 +15,7 @@ public class EmployeeRepository {
     }
 
     public Employee create(Employee newEmployee) {
-        return null;
+        employees.add(newEmployee);
+        return newEmployee;
     }
 }
