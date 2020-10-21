@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/employees")
 public class EmployeesController {
 
-    private static final List<Employee> employees = new ArrayList<>();
     private final EmployeeService employeeService;
 
     public EmployeesController(EmployeeService employeeService) {
