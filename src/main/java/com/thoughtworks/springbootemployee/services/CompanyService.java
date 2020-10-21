@@ -24,6 +24,6 @@ public class CompanyService {
     }
 
     public Company searchById(Integer id) {
-        return null;
+        return companyRepository.findById(id);
     }
 }

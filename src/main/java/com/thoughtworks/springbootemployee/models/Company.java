@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Company {
 
+    private Integer id;
     private String companyName;
     private List<Employee> employees = new ArrayList<>();
 
@@ -12,6 +13,7 @@ public class Company {
     }
 
     public Company(Integer id, String companyName) {
+        this.id = id;
         this.companyName = companyName;
     }
 
@@ -36,6 +38,6 @@ public class Company {
     }
 
     public Integer getId() {
-        return 0;
+        return id;
     }
 }
