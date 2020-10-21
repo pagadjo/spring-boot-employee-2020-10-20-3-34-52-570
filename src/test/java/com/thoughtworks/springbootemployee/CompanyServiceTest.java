@@ -97,7 +97,7 @@ class CompanyServiceTest {
         CompanyService companyService = new CompanyService(companyRepository);
 
         //when
-        List<Employee> employees = companyService.getEmployees(newCompany.getId());
+        List<Employee> employees = companyService.getEmployeesByCompanyId(newCompany.getId());
 
         //then
         assertEquals(2, employees.size());

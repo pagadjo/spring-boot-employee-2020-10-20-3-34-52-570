@@ -29,7 +29,7 @@ public class CompanyService {
         return companyRepository.findById(id);
     }
 
-    public List<Employee> getEmployees(Integer id) {
+    public List<Employee> getEmployeesByCompanyId(Integer id) {
         return companyRepository.getAll()
                 .stream()
                 .filter(company -> company.getId().equals(id))
