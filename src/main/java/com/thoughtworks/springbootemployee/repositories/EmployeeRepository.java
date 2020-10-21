@@ -22,4 +22,8 @@ public class EmployeeRepository {
     public Employee findById(Integer id) {
         return null;
     }
+
+    public Employee update(Integer id, Employee employee) {
+        return null;
+    }
 }

@@ -59,4 +59,20 @@ class EmployeeServiceTest {
         assertNotNull(employee);
         assertSame(employee, fetchedEmployee);
     }
+
+    @Test
+    void should_return_updated_employee_when_update_given_employee_and_field_updates() {
+        //given
+        Employee employee = new Employee(1, "", 20, "male", 1000);
+        Employee expectedEmployee = new Employee(1, "Cedric", 19, "female", 6600);
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        when(repository.update(employee.getId(), employee)).thenReturn(expectedEmployee);
+        EmployeeService employeeService = new EmployeeService(repository);
+
+        //when
+        Employee updatedEmployee = employeeService.update(employee.getId(), employee);
+
+        //then
+        assertSame(expectedEmployee, updatedEmployee);
+    }
 }

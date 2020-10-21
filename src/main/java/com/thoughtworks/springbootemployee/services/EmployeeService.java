@@ -26,4 +26,8 @@ public class EmployeeService {
     public Employee searchById(Integer id) {
         return employeeRepository.findById(id);
     }
+
+    public Employee update(Integer id, Employee employee) {
+        return null;
+    }
 }
