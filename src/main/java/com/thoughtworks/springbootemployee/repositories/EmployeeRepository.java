@@ -20,7 +20,10 @@ public class EmployeeRepository {
     }
 
     public Employee findById(Integer id) {
-        return null;
+        return employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     public Employee update(Integer id, Employee updatedEmployee) {

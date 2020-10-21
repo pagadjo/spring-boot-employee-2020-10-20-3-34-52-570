@@ -41,11 +41,8 @@ public class EmployeesController {
     }
 
     @GetMapping("/{employeeId}")
-    public Employee searchById(@PathVariable("employeeId") String employeeId) {
-        return employees.stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst()
-                .orElse(null);
+    public Employee searchById(@PathVariable("employeeId") Integer employeeId) {
+        return employeeService.searchById(employeeId);
     }
 
     @PutMapping("/{employeeId}")
