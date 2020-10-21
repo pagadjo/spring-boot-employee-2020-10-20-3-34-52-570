@@ -23,13 +23,14 @@ public class Company {
     }
 
     public List<Employee> getEmployees() {
-        return null;
+        return employees;
     }
 
     public void addEmployee(Employee employee) {
+        employees.add(employee);
     }
 
     public int getEmployeeNumber() {
-        return 0;
+        return employees.size();
     }
 }
