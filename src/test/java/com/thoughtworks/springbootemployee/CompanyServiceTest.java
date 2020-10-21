@@ -147,4 +147,21 @@ class CompanyServiceTest {
         verify(companyRepository, times(1)).delete(1);
     }
 
+    @Test
+    void should_return_2_companies_when_getCompaniesByPageAndPageSize_given_2_companies_page_1_and_pageSize_2() {
+        //given
+        Company firstCompany = new Company(1, "OOCL");
+        Company secondCompany = new Company(1, "OOIL");
+        int page = 1, pageSize = 2;
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        when(companyRepository.getAll()).thenReturn(asList(firstCompany, secondCompany));
+        CompanyService companyService = new CompanyService(companyRepository);
+
+        //when
+        List<Company> fetchedCompanies = companyService.getCompaniesByPageAndPageSize(page, pageSize);
+
+        //then
+        assertEquals(2, fetchedCompanies.size());
+
+    }
 }

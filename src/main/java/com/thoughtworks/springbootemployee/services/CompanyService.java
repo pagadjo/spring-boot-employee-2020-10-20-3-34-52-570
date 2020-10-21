@@ -44,4 +44,8 @@ public class CompanyService {
     public void delete(Integer id) {
         companyRepository.delete(id);
     }
+
+    public List<Company> getCompaniesByPageAndPageSize(int page, int pageSize) {
+        return null;
+    }
 }
