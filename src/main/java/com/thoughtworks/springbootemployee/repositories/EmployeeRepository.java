@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepository {
@@ -43,6 +44,9 @@ public class EmployeeRepository {
     }
 
     public List<Employee> findByPageAndPageSize(int page, int pageSize) {
-        return null;
+        return employees.stream()
+                .skip(pageSize * (page - 1))
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
