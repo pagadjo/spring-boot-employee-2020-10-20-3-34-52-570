@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -165,5 +166,20 @@ class EmployeeServiceTest {
         assertEquals(1, fetchedEmployees.size());
         assertSame(thirdEmployee, fetchedEmployees.get(0));
 
+    }
+
+    @Test
+    void should_return_0_employee_when_getByEmployeeByPage_given_0_employees_page_1_and_pageSize_2() {
+        //given
+        int page = 1, pageSize = 2;
+        EmployeeRepository repository = mock(EmployeeRepository.class);
+        when(repository.getAll()).thenReturn(Collections.emptyList());
+        EmployeeService employeeService = new EmployeeService(repository);
+
+        //when
+        List<Employee> fetchedEmployees = employeeService.getEmployeeByPageAndPageSize(page, pageSize);
+
+        //then
+        assertEquals(0, fetchedEmployees.size());
     }
 }
