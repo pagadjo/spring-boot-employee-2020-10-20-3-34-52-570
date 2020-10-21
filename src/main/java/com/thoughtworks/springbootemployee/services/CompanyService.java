@@ -5,7 +5,9 @@ import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.CompanyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -28,6 +30,11 @@ public class CompanyService {
     }
 
     public List<Employee> getEmployees(Integer id) {
-        return null;
+        return companyRepository.getAll()
+                .stream()
+                .filter(company -> company.getId().equals(id))
+                .findFirst()
+                .map(Company::getEmployees)
+                .orElse(Collections.emptyList());
     }
 }
