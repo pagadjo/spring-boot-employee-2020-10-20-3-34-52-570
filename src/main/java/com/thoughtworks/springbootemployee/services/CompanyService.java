@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -39,6 +38,6 @@ public class CompanyService {
     }
 
     public Company update(Integer id, Company expectedCompany) {
-        return null;
+        return companyRepository.update(id, expectedCompany);
     }
 }
