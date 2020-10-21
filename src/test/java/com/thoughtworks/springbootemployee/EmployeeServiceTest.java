@@ -129,4 +129,21 @@ class EmployeeServiceTest {
 
     }
 
+    @Test
+    void should_return_2_employees_when_getByEmployeeByPage_given_2_employees_page_1_and_pageSize_5() {
+        //given
+        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000);
+        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
+        int page = 1, pageSize = 5;
+        EmployeeRepository repository = mock(EmployeeRepository.class);
+        when(repository.findByPageAndPageSize(page, pageSize)).thenReturn(asList(firstEmployee, secondEmployee));
+        EmployeeService employeeService = new EmployeeService(repository);
+
+        //when
+        List<Employee> fetchedEmployees = employeeService.getEmployeeByPageAndPageSize(page, pageSize);
+
+        //then
+        assertEquals(2, fetchedEmployees.size());
+
+    }
 }
