@@ -37,6 +37,8 @@ public class EmployeeService {
     }
 
     public List<Employee> searchByGender(String gender) {
-        return null;
+        return employeeRepository.getAll().stream()
+                .filter(employee -> employee.getGender().equalsIgnoreCase(gender))
+                .collect(Collectors.toList());
     }
 }
