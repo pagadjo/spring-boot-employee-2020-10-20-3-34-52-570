@@ -93,7 +93,7 @@ class CompanyServiceTest {
         newCompany.addEmployee(secondEmployee);
 
         CompanyRepository companyRepository = mock(CompanyRepository.class);
-        when(companyRepository.create(newCompany)).thenReturn(newCompany);
+        when(companyRepository.getAll()).thenReturn(asList(newCompany));
         CompanyService companyService = new CompanyService(companyRepository);
 
         //when
@@ -101,7 +101,7 @@ class CompanyServiceTest {
 
         //then
         assertEquals(2, employees.size());
-        assertSame(firstEmployee,employees.get(0));
-        assertSame(secondEmployee,employees.get(1));
+        assertSame(firstEmployee, employees.get(0));
+        assertSame(secondEmployee, employees.get(1));
     }
 }
