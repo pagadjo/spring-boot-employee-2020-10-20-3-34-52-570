@@ -41,4 +41,8 @@ public class EmployeeRepository {
                 .filter(employee -> employee.getId().equals(id))
                 .findFirst().ifPresent(employees::remove);
     }
+
+    public List<Employee> findByPageAndPageSize(int page, int pageSize) {
+        return null;
+    }
 }

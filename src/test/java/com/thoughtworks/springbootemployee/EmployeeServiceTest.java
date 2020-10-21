@@ -4,10 +4,12 @@ import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.EmployeeRepository;
 import com.thoughtworks.springbootemployee.services.EmployeeService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -22,7 +24,7 @@ class EmployeeServiceTest {
     void should_return_2_when_get_employees_given_2_employees() {
         //given
         EmployeeRepository repository = mock(EmployeeRepository.class);
-        when(repository.getAll()).thenReturn(Arrays.asList(new Employee(), new Employee()));
+        when(repository.getAll()).thenReturn(asList(new Employee(), new Employee()));
         EmployeeService employeeService = new EmployeeService(repository);
 
         //when
@@ -99,7 +101,7 @@ class EmployeeServiceTest {
         Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
         Employee thirdEmployee = new Employee(3, "Lisa", 20, "female", 1000);
         EmployeeRepository repository = mock(EmployeeRepository.class);
-        when(repository.getAll()).thenReturn(Arrays.asList(firstEmployee, secondEmployee, thirdEmployee));
+        when(repository.getAll()).thenReturn(asList(firstEmployee, secondEmployee, thirdEmployee));
         EmployeeService employeeService = new EmployeeService(repository);
 
         //when
@@ -107,6 +109,24 @@ class EmployeeServiceTest {
 
         //then
         assertEquals(2, employees.size());
+    }
+
+    @Test
+    void should_return_2_employees_when_getByEmployeeByPage_given_5_employees_page_1_and_pageSize_2() {
+        //given
+        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000);
+        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
+        int page = 1, pageSize = 2;
+        EmployeeRepository repository = mock(EmployeeRepository.class);
+        when(repository.findByPageAndPageSize(page, pageSize)).thenReturn(asList(firstEmployee, secondEmployee));
+        EmployeeService employeeService = new EmployeeService(repository);
+
+        //when
+        List<Employee> fetchedEmployees = employeeService.getEmployeeByPageAndPageSize(page, pageSize);
+
+        //then
+        assertEquals(2, fetchedEmployees.size());
+
     }
 
 }
