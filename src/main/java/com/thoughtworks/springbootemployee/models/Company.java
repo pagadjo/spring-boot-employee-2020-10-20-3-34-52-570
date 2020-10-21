@@ -1,20 +1,20 @@
 package com.thoughtworks.springbootemployee.models;
 
 public class Company{
-    private String name;
+    private String companyName;
 
     public Company() {
     }
 
-    public Company(String name) {
-        this.name = name;
+    public Company(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getName() {
-        return name;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }

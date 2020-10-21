@@ -39,7 +39,7 @@ class CompanyServiceTest {
         Company company = companyService.create(newCompany);
 
         //then
-        assertEquals("OOCL", company.getName());
+        assertEquals("OOCL", company.getCompanyName());
         assertSame(newCompany, company);
     }
 
