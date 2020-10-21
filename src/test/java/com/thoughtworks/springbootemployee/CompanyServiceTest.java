@@ -6,6 +6,8 @@ import com.thoughtworks.springbootemployee.repositories.CompanyRepository;
 import com.thoughtworks.springbootemployee.services.CompanyService;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -79,5 +81,27 @@ class CompanyServiceTest {
         //then
         assertNotNull(company);
         assertSame(company, fetchedCompany);
+    }
+
+    @Test
+    void should_return_2_employee_under_OOCL_when_get_employees_given_2_employees() {
+        //given
+        Company newCompany = new Company(1, "OOCL");
+        Employee firstEmployee = new Employee();
+        Employee secondEmployee = new Employee();
+        newCompany.addEmployee(firstEmployee);
+        newCompany.addEmployee(secondEmployee);
+
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        when(companyRepository.create(newCompany)).thenReturn(newCompany);
+        CompanyService companyService = new CompanyService(companyRepository);
+
+        //when
+        List<Employee> employees = companyService.getEmployees(newCompany.getId());
+
+        //then
+        assertEquals(2, employees.size());
+        assertSame(firstEmployee,employees.get(0));
+        assertSame(secondEmployee,employees.get(1));
     }
 }
