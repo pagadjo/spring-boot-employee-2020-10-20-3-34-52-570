@@ -35,4 +35,7 @@ public class EmployeeRepository {
         });
         return updatedEmployee;
     }
+
+    public void delete(Integer id) {
+    }
 }

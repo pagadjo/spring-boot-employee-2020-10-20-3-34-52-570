@@ -7,10 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class EmployeeServiceTest {
@@ -18,7 +22,7 @@ class EmployeeServiceTest {
     @Test
     void should_return_2_when_get_employees_given_2_employees() {
         //given
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
         when(repository.getAll()).thenReturn(Arrays.asList(new Employee(), new Employee()));
         EmployeeService employeeService = new EmployeeService(repository);
 
@@ -33,7 +37,7 @@ class EmployeeServiceTest {
     void should_return_employee_with_id_1_when_create_given_employee_with_id_of_1() {
         //given
         Employee newEmployee = new Employee(1, "", 20, "male", 1000);
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
         when(repository.create(newEmployee)).thenReturn(newEmployee);
         EmployeeService employeeService = new EmployeeService(repository);
 
@@ -48,7 +52,7 @@ class EmployeeServiceTest {
     void should_return_employee_when_searchById_given_employee_with_id_of_1() {
         //given
         Employee employee = new Employee(1, "", 20, "male", 1000);
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
         when(repository.findById(employee.getId())).thenReturn(employee);
         EmployeeService employeeService = new EmployeeService(repository);
 
@@ -65,7 +69,7 @@ class EmployeeServiceTest {
         //given
         Employee employee = new Employee(1, "", 20, "male", 1000);
         Employee expectedEmployee = new Employee(1, "Cedric", 19, "female", 6600);
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
         when(repository.update(employee.getId(), employee)).thenReturn(expectedEmployee);
         EmployeeService employeeService = new EmployeeService(repository);
 
@@ -75,4 +79,18 @@ class EmployeeServiceTest {
         //then
         assertSame(expectedEmployee, updatedEmployee);
     }
+
+    @Test
+    void should_trigger_repository_delete_once_when_service_delete_called_given_1_employee() {
+        //given
+        Employee employee = new Employee(1, "", 20, "male", 1000);
+        EmployeeRepository repository = mock(EmployeeRepository.class);
+
+        EmployeeService employeeService = new EmployeeService(repository);
+        //when
+        employeeService.delete(employee.getId());
+        //then
+        verify(repository,times(1)).delete(1);
+    }
+
 }
