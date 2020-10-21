@@ -24,6 +24,6 @@ public class EmployeeService {
     }
 
     public Employee searchById(Integer id) {
-        return null;
+        return employeeRepository.findById(id);
     }
 }
