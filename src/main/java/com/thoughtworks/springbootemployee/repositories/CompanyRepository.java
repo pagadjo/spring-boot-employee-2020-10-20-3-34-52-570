@@ -26,4 +26,8 @@ public class CompanyRepository {
                 .findFirst()
                 .orElse(null);
     }
+
+    public Company update(Integer id, Company company) {
+        return null;
+    }
 }

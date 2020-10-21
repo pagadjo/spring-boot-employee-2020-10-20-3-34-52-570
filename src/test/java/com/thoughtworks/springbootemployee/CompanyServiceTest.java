@@ -104,4 +104,29 @@ class CompanyServiceTest {
         assertSame(firstEmployee, employees.get(0));
         assertSame(secondEmployee, employees.get(1));
     }
+
+    @Test
+    void should_return_updated_company_with_retained_employee_when_update_given_company_with_two_employees_and_field_updates() {
+        //given
+        Company company = new Company(1, "OOCL");
+        Employee firstEmployee = new Employee();
+        Employee secondEmployee = new Employee();
+        company.addEmployee(firstEmployee);
+        company.addEmployee(secondEmployee);
+
+        Company expectedCompany = new Company(1, "OOIL");
+        company.addEmployee(firstEmployee);
+        company.addEmployee(secondEmployee);
+
+        CompanyRepository companyRepository = mock(CompanyRepository.class);
+        when(companyRepository.update(company.getId(), company)).thenReturn(expectedCompany);
+        CompanyService companyService = new CompanyService(companyRepository);
+
+        //when
+        Company updatedCompany = companyService.update(company.getId(), expectedCompany);
+
+        //then
+        assertSame(expectedCompany, updatedCompany);
+        assertEquals(2, updatedCompany.getEmployeeNumber());
+    }
 }

@@ -45,4 +45,5 @@ public class CompaniesController {
     public List<Employee> getEmployeesByCompanyId(@PathVariable("companyId") Integer companyId){
         return companyService.getEmployeesByCompanyId(companyId);
     }
+
 }

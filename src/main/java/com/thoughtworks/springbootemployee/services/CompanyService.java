@@ -37,4 +37,8 @@ public class CompanyService {
                 .map(Company::getEmployees)
                 .orElse(Collections.emptyList());
     }
+
+    public Company update(Integer id, Company expectedCompany) {
+        return null;
+    }
 }
