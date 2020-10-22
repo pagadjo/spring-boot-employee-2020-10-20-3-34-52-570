@@ -31,17 +31,18 @@ public class CompanyService {
         return companyRepository.findById(companyId).orElse(null);
     }
 
-    public List<Employee> getEmployeesByCompanyId(Integer id) {
+    public List<Employee> getEmployeesByCompanyId(Integer companyId) {
         return companyRepositoryLegacy.getAll()
                 .stream()
-                .filter(company -> company.getCompanyId().equals(id))
+                .filter(company -> company.getCompanyId().equals(companyId))
                 .findFirst()
                 .map(Company::getEmployees)
                 .orElse(Collections.emptyList());
     }
 
-    public Company update(Integer id, Company expectedCompany) {
-        return companyRepositoryLegacy.update(id, expectedCompany);
+    public Company update(Integer companyId, Company companyUpdate) {
+        companyUpdate.setCompanyId(companyId);
+        return companyRepository.save(companyUpdate);
     }
 
     public void delete(Integer id) {
