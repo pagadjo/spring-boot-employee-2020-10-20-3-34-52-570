@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 public class EmployeeService {
@@ -34,8 +35,25 @@ public class EmployeeService {
     }
 
     public Employee update(Integer id, Employee employeeUpdate) {
-        employeeUpdate.setId(id);
-        return employeeRepository.save(employeeUpdate);
+        Employee employee = employeeRepository.findById(id).orElse(null);
+        if (nonNull(employee)) {
+            if (nonNull(employeeUpdate.getName())) {
+                employee.setName(employeeUpdate.getName());
+            }
+            if (nonNull(employeeUpdate.getAge())) {
+                employee.setAge(employeeUpdate.getAge());
+            }
+            if (nonNull(employeeUpdate.getGender())) {
+                employee.setGender(employeeUpdate.getGender());
+            }
+            if (nonNull(employeeUpdate.getSalary())) {
+                employee.setSalary(employeeUpdate.getSalary());
+            }
+            if (nonNull(employeeUpdate.getCompanyId())) {
+                employee.setCompanyId(employeeUpdate.getCompanyId());
+            }
+        }
+        return employeeRepository.save(employee);
     }
 
     public void delete(Integer id) {
