@@ -11,9 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.junit.Assert.assertNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -92,12 +91,14 @@ class EmployeesIntegrationTest {
         //given
         Employee employee = new Employee(1, "Janelle", 21, "female", 100000);
         employeeRepository.save(employee);
+
         String employeeJSON = "{\n" +
                 "    \"name\" : \"JC\",\n" +
                 "    \"age\" : 20,\n" +
                 "    \"gender\" : \"male\",\n" +
                 "    \"salary\" : 100\n" +
                 "}";
+
         //when then
         mockMvc.perform(put("/employees/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -109,5 +110,18 @@ class EmployeesIntegrationTest {
                 .andExpect(jsonPath("$.age").value(20))
                 .andExpect(jsonPath("$.gender").value("male"))
                 .andExpect(jsonPath("$.salary").value(100));
+    }
+
+    @Test
+    void should_delete_employee_when_deleted_given_employee_id_1() throws Exception {
+        //given
+        Employee employee = new Employee(1, "Janelle", 21, "female", 100000);
+        employeeRepository.save(employee);
+
+        //when then
+        mockMvc.perform(delete("/employees/{employeeId}", 1)).andExpect(status().isOk());
+
+        Employee employee1 = employeeRepository.findById(1).orElse(null);
+        assertNull(employee1);
     }
 }
