@@ -67,4 +67,20 @@ class EmployeesIntegrationTest {
                 .andExpect(jsonPath("$.gender").value("female"))
                 .andExpect(jsonPath("$.salary").value(100000));
     }
+
+    @Test
+    void should_get_employee_with_id_1_when_search_by_id_given_employee_with_id_1() throws Exception {
+        //given
+
+        Employee employee = new Employee(1, "Janelle", 21, "female", 100000);
+        employeeRepository.save(employee);
+        //when then
+        mockMvc.perform(get("/employees/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.age").value(21))
+                .andExpect(jsonPath("$.gender").value("female"))
+                .andExpect(jsonPath("$.salary").value(100000));
+    }
 }
