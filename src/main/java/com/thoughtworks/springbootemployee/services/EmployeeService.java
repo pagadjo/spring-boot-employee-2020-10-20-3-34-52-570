@@ -3,10 +3,11 @@ package com.thoughtworks.springbootemployee.services;
 import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.EmployeeRepository;
 import com.thoughtworks.springbootemployee.repositories.EmployeeRepositoryLegacy;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
@@ -57,9 +58,8 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeByPageAndPageSize(int page, int pageSize) {
-        return employeeRepositoryLegacy.getAll().stream()
-                .skip(pageSize * (page - 1))
-                .limit(pageSize)
-                .collect(Collectors.toList());
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        return employeeRepository.findAll(pageable).toList();
     }
 }
