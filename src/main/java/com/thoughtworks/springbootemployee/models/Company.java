@@ -1,19 +1,26 @@
 package com.thoughtworks.springbootemployee.models;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Company {
 
-    private Integer id;
+    @Id
+    @GeneratedValue
+    private Integer companyId;
     private String companyName;
+
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(columnDefinition = "company_id")
     private List<Employee> employees = new ArrayList<>();
 
     public Company() {
     }
 
-    public Company(Integer id, String companyName) {
-        this.id = id;
+    public Company(Integer companyId, String companyName) {
+        this.companyId = companyId;
         this.companyName = companyName;
     }
 
@@ -37,11 +44,11 @@ public class Company {
         return employees.size();
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 }
