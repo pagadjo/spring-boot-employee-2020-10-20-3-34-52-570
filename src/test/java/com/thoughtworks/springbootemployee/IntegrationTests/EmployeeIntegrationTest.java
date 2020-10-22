@@ -11,6 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -123,5 +126,26 @@ class EmployeesIntegrationTest {
 
         Employee employee1 = employeeRepository.findById(1).orElse(null);
         assertNull(employee1);
+    }
+
+    @Test
+    void should_return_all_male_when_filtered_gender_given_male_() throws Exception {
+        Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000);
+        Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000);
+        Employee thirdEmployee = new Employee(3, "Jc", 20, "male", 2000000);
+        employeeRepository.save(firstEmployee);
+        employeeRepository.save(secondEmployee);
+        employeeRepository.save(thirdEmployee);
+
+        mockMvc.perform(get("/employees?gender=male")).andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].id").value(2))
+                .andExpect(jsonPath("$[0].name").value("Jc"))
+                .andExpect(jsonPath("$[0].age").value(20))
+                .andExpect(jsonPath("$[0].gender").value("male"))
+                .andExpect(jsonPath("$[0].salary").value(2000000));
+
+        List<Employee> actual = employeeRepository.findByGender("male");
+        assertEquals(2, actual.size());
     }
 }
