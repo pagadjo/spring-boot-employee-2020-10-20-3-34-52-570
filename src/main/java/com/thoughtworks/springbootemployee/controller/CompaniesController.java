@@ -42,7 +42,7 @@ public class CompaniesController {
     @GetMapping("/{companyId}")
     public Company searchById(@PathVariable("companyId") Integer companyId) {
 
-        return companyService.searchById(companyId);
+        return companyService.searchByCompanyId(companyId);
     }
 
     @GetMapping("/{companyId}/employees")

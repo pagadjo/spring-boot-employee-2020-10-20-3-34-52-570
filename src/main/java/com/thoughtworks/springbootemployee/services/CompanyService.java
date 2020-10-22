@@ -27,8 +27,8 @@ public class CompanyService {
         return companyRepository.save(newCompany);
     }
 
-    public Company searchById(Integer id) {
-        return companyRepositoryLegacy.findById(id);
+    public Company searchByCompanyId(Integer companyId) {
+        return companyRepository.findById(companyId).orElse(null);
     }
 
     public List<Employee> getEmployeesByCompanyId(Integer id) {

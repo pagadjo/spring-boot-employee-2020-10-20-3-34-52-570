@@ -78,7 +78,7 @@ class CompanyServiceTest {
         CompanyService companyService = new CompanyService(repository);
 
         //when
-        Company fetchedCompany = companyService.searchById(company.getCompanyId());
+        Company fetchedCompany = companyService.searchByCompanyId(company.getCompanyId());
 
         //then
         assertNotNull(company);
