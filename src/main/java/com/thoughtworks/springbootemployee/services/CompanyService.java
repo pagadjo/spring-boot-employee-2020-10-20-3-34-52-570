@@ -24,7 +24,7 @@ public class CompanyService {
     }
 
     public Company create(Company newCompany) {
-        return companyRepositoryLegacy.create(newCompany);
+        return companyRepository.save(newCompany);
     }
 
     public Company searchById(Integer id) {
