@@ -32,11 +32,10 @@ public class CompanyService {
     }
 
     public List<Employee> getEmployeesByCompanyId(Integer companyId) {
-        return companyRepositoryLegacy.getAll()
-                .stream()
+        return companyRepository.findAll().stream()
                 .filter(company -> company.getCompanyId().equals(companyId))
-                .findFirst()
                 .map(Company::getEmployees)
+                .findFirst()
                 .orElse(Collections.emptyList());
     }
 
