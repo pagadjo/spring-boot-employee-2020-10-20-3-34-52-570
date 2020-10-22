@@ -3,16 +3,15 @@ package com.thoughtworks.springbootemployee.services;
 import com.thoughtworks.springbootemployee.models.Company;
 import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.CompanyRepository;
-import com.thoughtworks.springbootemployee.repositories.CompanyRepositoryLegacy;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
-    private CompanyRepositoryLegacy companyRepositoryLegacy;
     private CompanyRepository companyRepository;
 
     public CompanyService(CompanyRepository companyRepository) {
@@ -49,9 +48,7 @@ public class CompanyService {
     }
 
     public List<Company> getCompaniesByPageAndPageSize(int page, int pageSize) {
-        return companyRepositoryLegacy.getAll().stream()
-                .skip(pageSize * (page - 1))
-                .limit(pageSize)
-                .collect(Collectors.toList());
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return companyRepository.findAll(pageable).toList();
     }
 }
