@@ -53,7 +53,7 @@ public class EmployeeService {
     }
 
     public List<Employee> searchByGender(String gender) {
-        return employeeRepositoryLegacy.findByGender(gender);
+        return employeeRepository.findByGender(gender);
     }
 
     public List<Employee> getEmployeeByPageAndPageSize(int page, int pageSize) {
