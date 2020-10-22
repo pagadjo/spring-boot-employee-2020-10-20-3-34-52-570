@@ -102,7 +102,7 @@ class EmployeeServiceTest {
         Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
         Employee thirdEmployee = new Employee(3, "Lisa", 20, "female", 1000);
         EmployeeRepository repository = mock(EmployeeRepository.class);
-        when(repository.getAll()).thenReturn(asList(firstEmployee, secondEmployee, thirdEmployee));
+        when(repository.findByGender("male")).thenReturn(asList(firstEmployee, secondEmployee));
         EmployeeService employeeService = new EmployeeService(repository);
 
         //when
