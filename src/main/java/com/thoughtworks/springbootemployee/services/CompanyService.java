@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 @Service
 public class CompanyService {
     private CompanyRepository companyRepository;
@@ -35,8 +37,12 @@ public class CompanyService {
     }
 
     public Company update(Integer companyId, Company companyUpdate) {
-        companyUpdate.setCompanyId(companyId);
-        return companyRepository.save(companyUpdate);
+        Company company = companyRepository.findById(companyId).orElse(null);
+        if (nonNull(company) && nonNull(companyUpdate.getCompanyName())) {
+            company.setCompanyName(companyUpdate.getCompanyName());
+            return companyRepository.save(company);
+        }
+        return null;
     }
 
     public void delete(Integer companyId) {
