@@ -34,15 +34,8 @@ public class EmployeeService {
     }
 
     public Employee update(Integer id, Employee employeeUpdate) {
-        Employee employee = searchById(id);
-        if (isNull(employee)) {
-            return null;
-        }
-        employee.setName(employeeUpdate.getName());
-        employee.setAge(employeeUpdate.getAge());
-        employee.setGender(employeeUpdate.getGender());
-        employee.setSalary(employeeUpdate.getSalary());
-        return employeeRepository.save(employee);
+        employeeUpdate.setId(id);
+        return employeeRepository.save(employeeUpdate);
     }
 
     public void delete(Integer id) {
