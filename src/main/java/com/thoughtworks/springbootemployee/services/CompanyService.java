@@ -30,14 +30,6 @@ public class CompanyService {
         return companyRepository.findById(companyId).orElse(null);
     }
 
-//    public List<Employee> getEmployeesByCompanyId(Integer companyId) {
-//        return companyRepository.findAll().stream()
-//                .filter(company -> company.getCompanyId().equals(companyId))
-//                .map(Company::getEmployees)
-//                .findFirst()
-//                .orElse(Collections.emptyList());
-//    }
-
     public List<Employee> getEmployeesByCompanyId(Integer companyId) {
         return companyRepository.findEmployeesByCompanyId(companyId);
     }
