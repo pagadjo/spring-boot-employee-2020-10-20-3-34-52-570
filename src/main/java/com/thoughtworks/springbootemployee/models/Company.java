@@ -12,7 +12,7 @@ public class Company {
     private Integer companyId;
     private String companyName;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private List<Employee> employees = new ArrayList<>();
 

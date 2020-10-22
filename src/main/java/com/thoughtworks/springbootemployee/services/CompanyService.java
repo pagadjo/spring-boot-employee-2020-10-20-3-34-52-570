@@ -45,8 +45,8 @@ public class CompanyService {
         return companyRepository.save(companyUpdate);
     }
 
-    public void delete(Integer id) {
-        companyRepositoryLegacy.delete(id);
+    public void delete(Integer companyId) {
+        companyRepository.deleteById(companyId);
     }
 
     public List<Company> getCompaniesByPageAndPageSize(int page, int pageSize) {
