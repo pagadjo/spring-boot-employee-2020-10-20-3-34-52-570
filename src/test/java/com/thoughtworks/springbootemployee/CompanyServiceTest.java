@@ -126,13 +126,13 @@ class CompanyServiceTest {
         expectedCompany.addEmployee(firstEmployee);
         expectedCompany.addEmployee(secondEmployee);
 
+        when(companyRepository.findById(company.getCompanyId())).thenReturn(java.util.Optional.of(expectedCompany));
         when(companyRepository.save(expectedCompany)).thenReturn(expectedCompany);
 
         //when
         Company updatedCompany = companyService.update(company.getCompanyId(), expectedCompany);
-
         //then
-        assertSame(expectedCompany, updatedCompany);
+        assertEquals(expectedCompany.getCompanyName(), updatedCompany.getCompanyName());
         assertEquals(2, updatedCompany.getEmployeeNumber());
     }
 
@@ -157,9 +157,9 @@ class CompanyServiceTest {
         when(companyRepository.findAll()).thenReturn(asList(firstCompany, secondCompany));
 
         //when
-        Pageable pageable = PageRequest.of(page,pageSize);
+        Pageable pageable = PageRequest.of(page, pageSize);
         when(companyRepository.findAll(pageable)).thenReturn(mockPage);
-        when(mockPage.toList()).thenReturn(asList(firstCompany,secondCompany));
+        when(mockPage.toList()).thenReturn(asList(firstCompany, secondCompany));
         List<Company> fetchedCompanies = companyService.getCompaniesByPageAndPageSize(page, pageSize);
 
         //then

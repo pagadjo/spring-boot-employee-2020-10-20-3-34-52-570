@@ -73,7 +73,8 @@ class EmployeeServiceTest {
         //given
         Employee employee = new Employee(1, "", 20, "male", 1000);
         Employee expectedEmployee = new Employee(1, "Cedric", 19, "female", 6600);
-        when(employeeRepository.save(employee)).thenReturn(expectedEmployee);
+        when(employeeRepository.findById(employee.getId())).thenReturn(java.util.Optional.of(expectedEmployee));
+        when(employeeRepository.save(expectedEmployee)).thenReturn(expectedEmployee);
 
         //when
         Employee updatedEmployee = employeeService.update(employee.getId(), employee);
