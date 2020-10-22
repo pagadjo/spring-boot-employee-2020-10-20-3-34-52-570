@@ -75,7 +75,7 @@ class EmployeesIntegrationTest {
         Employee employee = new Employee(1, "Janelle", 21, "female", 100000);
         employeeRepository.save(employee);
         //when then
-        mockMvc.perform(get("/employees/2"))
+        mockMvc.perform(get("/employees/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.id").value(1))
