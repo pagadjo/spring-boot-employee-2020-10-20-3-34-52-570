@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -15,7 +17,10 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -76,9 +81,9 @@ class EmployeesIntegrationTest {
     @Test
     void should_get_employee_with_id_1_when_search_by_id_given_employee_with_id_1() throws Exception {
         //given
-
         Employee employee = new Employee(1, "Janelle", 21, "female", 100000);
         employeeRepository.save(employee);
+
         //when then
         mockMvc.perform(get("/employees/1"))
                 .andExpect(status().isOk())
@@ -130,6 +135,7 @@ class EmployeesIntegrationTest {
 
     @Test
     void should_return_all_male_when_filtered_gender_given_male_() throws Exception {
+        //given
         Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000);
         Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000);
         Employee thirdEmployee = new Employee(3, "Jc", 20, "male", 2000000);
@@ -137,6 +143,7 @@ class EmployeesIntegrationTest {
         employeeRepository.save(secondEmployee);
         employeeRepository.save(thirdEmployee);
 
+        //when then
         mockMvc.perform(get("/employees?gender=male")).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").isNumber())
                 .andExpect(jsonPath("$[0].id").value(2))
@@ -147,5 +154,31 @@ class EmployeesIntegrationTest {
 
         List<Employee> actual = employeeRepository.findByGender("male");
         assertEquals(2, actual.size());
+    }
+
+    @Test
+    void should_return_3_employees_filtered_by_page_and_pageSize__given_4_employees_page_0_and_pageSize_3() throws Exception {
+        //given
+        Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000);
+        Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000);
+        Employee thirdEmployee = new Employee(3, "Cedric", 20, "male", 2000000);
+        Employee fourthEmployee = new Employee(4, "Joseph", 20, "male", 2000000);
+        employeeRepository.save(firstEmployee);
+        employeeRepository.save(secondEmployee);
+        employeeRepository.save(thirdEmployee);
+        employeeRepository.save(fourthEmployee);
+
+        //when then
+        mockMvc.perform(get("/employees?page=0&pageSize=2")).andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("Janelle"))
+                .andExpect(jsonPath("$[0].age").value(21))
+                .andExpect(jsonPath("$[0].gender").value("female"))
+                .andExpect(jsonPath("$[0].salary").value(10000000));
+
+        Pageable pageable = PageRequest.of(0, 3);
+        List<Employee> actual = employeeRepository.findAll(pageable).toList();
+        assertEquals(3, actual.size());
     }
 }
