@@ -15,7 +15,6 @@ import static java.util.Objects.nonNull;
 @Service
 public class EmployeeService {
 
-    private EmployeeRepositoryLegacy employeeRepositoryLegacy;
     private EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
@@ -52,8 +51,9 @@ public class EmployeeService {
             if (nonNull(employeeUpdate.getCompanyId())) {
                 employee.setCompanyId(employeeUpdate.getCompanyId());
             }
+            return employeeRepository.save(employee);
         }
-        return employeeRepository.save(employee);
+        return null;
     }
 
     public void delete(Integer id) {
