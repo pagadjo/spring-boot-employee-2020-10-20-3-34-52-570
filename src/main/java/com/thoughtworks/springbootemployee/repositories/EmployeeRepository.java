@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class EmployeeRepository {
-   private List<Employee> employees = new ArrayList<>();
+    private List<Employee> employees = new ArrayList<>();
 
     public List<Employee> getAll() {
         return employees;
@@ -43,4 +43,9 @@ public class EmployeeRepository {
                 .findFirst().ifPresent(employees::remove);
     }
 
+    public List<Employee> findByGender(String gender) {
+        return employees.stream()
+                .filter(employee -> employee.getGender().equalsIgnoreCase(gender))
+                .collect(Collectors.toList());
+    }
 }
