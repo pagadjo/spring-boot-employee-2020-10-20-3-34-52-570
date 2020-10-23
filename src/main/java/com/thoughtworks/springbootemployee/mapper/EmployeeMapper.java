@@ -12,7 +12,6 @@ public class EmployeeMapper {
         EmployeeResponse employeeResponse = new EmployeeResponse();
 
         BeanUtils.copyProperties(employee, employeeResponse);
-        employeeResponse.setId(employee.getId());
         return employeeResponse;
     }
 

@@ -12,7 +12,6 @@ public class CompanyMapper {
         CompanyResponse companyResponse = new CompanyResponse();
 
         BeanUtils.copyProperties(company, companyResponse);
-        companyResponse.setCompanyId(company.getCompanyId());
         return companyResponse;
     }
 
