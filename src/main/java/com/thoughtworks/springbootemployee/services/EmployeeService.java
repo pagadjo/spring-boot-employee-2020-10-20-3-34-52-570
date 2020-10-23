@@ -1,7 +1,10 @@
 package com.thoughtworks.springbootemployee.services;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeRequest;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.exception.InvalidEmployeeException;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.EmployeeRepository;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -17,17 +21,21 @@ import static java.util.Objects.nonNull;
 public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
+    private EmployeeMapper employeeMapper;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
         this.employeeRepository = employeeRepository;
+        this.employeeMapper = employeeMapper;
     }
 
-    public List<Employee> getAll() {
-        return employeeRepository.findAll();
+    public List<EmployeeResponse> getAll() {
+        List<Employee> employees = employeeRepository.findAll();
+        return employees.stream().map(employee -> employeeMapper.toResponse(employee)).collect(Collectors.toList());
     }
 
-    public Employee create(Employee newEmployee) {
-        return employeeRepository.save(newEmployee);
+    public EmployeeResponse create(EmployeeRequest newEmployeeRequest) {
+        Employee employee = employeeRepository.save(employeeMapper.toEntity(newEmployeeRequest));
+        return employeeMapper.toResponse(employee);
     }
 
     public Employee searchById(Integer id) {
