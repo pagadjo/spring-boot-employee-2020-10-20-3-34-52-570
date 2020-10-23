@@ -31,12 +31,8 @@ public class EmployeeService {
     }
 
     public Employee searchById(Integer id) {
-//        return employeeRepository.findById(id).orElseThrow(new EmployeeNotFoundException("Employee " + id + " not found!"));
-        Employee employee = employeeRepository.findById(id).orElse(null);
-        if(nonNull(employee)){
-            return employee;
-        }
-        throw new EmployeeNotFoundException("Employee " + id + " not found!");
+        return employeeRepository.findById(id)
+                .orElseThrow(()->new EmployeeNotFoundException("Employee " + id + " not found!"));
     }
 
     public Employee update(Integer id, Employee employeeUpdate) {
