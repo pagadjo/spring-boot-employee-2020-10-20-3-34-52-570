@@ -44,7 +44,7 @@ class EmployeeServiceTest {
     @Test
     void should_return_employee_with_id_1_when_create_given_employee_with_id_of_1() {
         //given
-        Employee newEmployee = new Employee(1, "", 20, "male", 1000);
+        Employee newEmployee = new Employee(1, "", 20, "male", 1000,1);
         when(employeeRepository.save(newEmployee)).thenReturn(newEmployee);
 
         //when
@@ -57,7 +57,7 @@ class EmployeeServiceTest {
     @Test
     void should_return_employee_when_searchById_given_employee_with_id_of_1() {
         //given
-        Employee employee = new Employee(1, "", 20, "male", 1000);
+        Employee employee = new Employee(1, "", 20, "male", 1000,1);
         when(employeeRepository.findById(employee.getId())).thenReturn(java.util.Optional.of(employee));
 
         //when
@@ -71,8 +71,8 @@ class EmployeeServiceTest {
     @Test
     void should_return_updated_employee_when_update_given_employee_and_field_updates() {
         //given
-        Employee employee = new Employee(1, "", 20, "male", 1000);
-        Employee expectedEmployee = new Employee(1, "Cedric", 19, "female", 6600);
+        Employee employee = new Employee(1, "", 20, "male", 1000,1);
+        Employee expectedEmployee = new Employee(1, "Cedric", 19, "female", 6600,1);
         when(employeeRepository.findById(employee.getId())).thenReturn(java.util.Optional.of(expectedEmployee));
         when(employeeRepository.save(expectedEmployee)).thenReturn(expectedEmployee);
 
@@ -86,7 +86,7 @@ class EmployeeServiceTest {
     @Test
     void should_trigger_repository_delete_once_when_service_delete_called_given_1_employee() {
         //given
-        Employee employee = new Employee(1, "", 20, "male", 1000);
+        Employee employee = new Employee(1, "", 20, "male", 1000,1);
 
         //when
         when(employeeRepository.findById(1)).thenReturn(java.util.Optional.of(employee));
@@ -99,9 +99,9 @@ class EmployeeServiceTest {
     @Test
     void should_return_2_male_employee_when_getByGender_given_2_male_1_female() {
         //given
-        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000);
-        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
-        Employee thirdEmployee = new Employee(3, "Lisa", 20, "female", 1000);
+        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000,1);
+        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000,1);
+        Employee thirdEmployee = new Employee(3, "Lisa", 20, "female", 1000,1);
         when(employeeRepository.findByGender("male")).thenReturn(asList(firstEmployee, secondEmployee));
 
         //when
@@ -114,8 +114,8 @@ class EmployeeServiceTest {
     @Test
     void should_return_2_employees_when_getByEmployeeByPage_given_2_employees_page_1_and_pageSize_2() {
         //given
-        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000);
-        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
+        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000,1);
+        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000,1);
         int page = 1, pageSize = 2;
 
         //when
@@ -132,8 +132,8 @@ class EmployeeServiceTest {
     @Test
     void should_return_2_employees_when_getByEmployeeByPage_given_2_employees_page_1_and_pageSize_5() {
         //given
-        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000);
-        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
+        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000,1);
+        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000,1);
         int page = 1, pageSize = 5;
         when(employeeRepository.findAll()).thenReturn(asList(firstEmployee, secondEmployee));
 
@@ -150,9 +150,9 @@ class EmployeeServiceTest {
     @Test
     void should_return_third_employee_when_getByEmployeeByPage_given_3_employees_page_2_and_pageSize_2() {
         //given
-        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000);
-        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000);
-        Employee thirdEmployee = new Employee(3, "Shana", 20, "male", 1000);
+        Employee firstEmployee = new Employee(1, "Cedric", 20, "male", 1000,1);
+        Employee secondEmployee = new Employee(2, "Jaycee", 20, "male", 1000,1);
+        Employee thirdEmployee = new Employee(3, "Shana", 20, "male", 1000,1);
         int page = 2, pageSize = 2;
         when(employeeRepository.findAll()).thenReturn(asList(firstEmployee, secondEmployee, thirdEmployee));
 

@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ActiveProfiles("test")
 class CompanyIntegrationTest {
 
     @Autowired
@@ -54,32 +56,37 @@ class CompanyIntegrationTest {
     @Test
     void should_return_created_company_when_create_a_company() throws Exception {
         //given
-        String companyJson = "{\n" +
-                "    \"companyName\": \"OOCL\",\n" +
-                "    \"employees\": [\n" +
-                "        {\n" +
-                "            \"name\": \"pagadjo\",\n" +
-                "            \"age\": 10,\n" +
-                "            \"gender\": \"male\",\n" +
-                "            \"salary\": 100000000\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"name\": \"manalch\",\n" +
-                "            \"age\": 10,\n" +
-                "            \"gender\": \"male\",\n" +
-                "            \"salary\": 100000000\n" +
-                "        }\n" +
-                "    ]\n" +
+//        String companyJson = "{\n" +
+//                "    \"companyName\": \"OOCL\",\n" +
+//                "    \"employees\": [\n" +
+//                "        {\n" +
+//                "            \"name\": \"pagadjo\",\n" +
+//                "            \"age\": 10,\n" +
+//                "            \"gender\": \"male\",\n" +
+//                "            \"salary\": 100000000\n" +
+//                "        },\n" +
+//                "        {\n" +
+//                "            \"name\": \"manalch\",\n" +
+//                "            \"age\": 10,\n" +
+//                "            \"gender\": \"male\",\n" +
+//                "            \"salary\": 100000000\n" +
+//                "        }\n" +
+//                "    ]\n" +
+//                "}";
+
+        String jsonCompany = "{\n" +
+                "    \"companyName\":\"OOCL\"\n" +
                 "}";
+
 
         //when then
         mockMvc.perform(post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(companyJson))
+                .content(jsonCompany))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.companyId").isNumber())
-                .andExpect(jsonPath("$.companyName").value("OOCL"))
-                .andExpect(jsonPath("$.employees").isNotEmpty());
+                .andExpect(jsonPath("$.companyName").value("OOCL"));
+//                .andExpect(jsonPath("$.employees").isNotEmpty());
     }
 
     @Test
@@ -100,46 +107,64 @@ class CompanyIntegrationTest {
     @Test
     void should_get_employees_of_company_with_company_id_1_when_search_by_id_given_company_with_id_1() throws Exception {
         //given
-        String companyJson = "{\n" +
-                "    \"companyName\": \"OOCL\",\n" +
-                "    \"employees\": [\n" +
-                "        {\n" +
-                "            \"name\": \"pagadjo\",\n" +
-                "            \"age\": 10,\n" +
-                "            \"gender\": \"male\",\n" +
-                "            \"salary\": 100000000\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"name\": \"manalch\",\n" +
-                "            \"age\": 21,\n" +
-                "            \"gender\": \"male\",\n" +
-                "            \"salary\": 800000000\n" +
-                "        }\n" +
-                "    ]\n" +
+//        String companyJson = "{\n" +
+//                "    \"companyName\": \"OOCL\",\n" +
+//                "    \"employees\": [\n" +
+//                "        {\n" +
+//                "            \"name\": \"pagadjo\",\n" +
+//                "            \"age\": 10,\n" +
+//                "            \"gender\": \"male\",\n" +
+//                "            \"salary\": 100000000\n" +
+//                "        },\n" +
+//                "        {\n" +
+//                "            \"name\": \"manalch\",\n" +
+//                "            \"age\": 21,\n" +
+//                "            \"gender\": \"male\",\n" +
+//                "            \"salary\": 800000000\n" +
+//                "        }\n" +
+//                "    ]\n" +
+//                "}";
+
+        String jsonCompany = "{\n" +
+                "    \"companyName\":\"OOCL\"\n" +
+                "}";
+
+
+        String jsonEmployees = "{\n" +
+                "    \"name\" : \"CEDRIC\",\n" +
+                "    \"age\" : 21,\n" +
+                "    \"gender\" : \"male\",\n" +
+                "    \"salary\" : 100000,\n" +
+                "    \"companyId\": 2\n" +
                 "}";
 
         //when then
         mockMvc.perform(post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(companyJson))
+                .content(jsonCompany))
                 .andExpect(status().isCreated());
 
-        mockMvc.perform(get("/companies/1/employees"))
+        mockMvc.perform(post("/employees")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonEmployees))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/companies/2/employees"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").isNumber())
-                .andExpect(jsonPath("$[0].name").value("pagadjo"))
-                .andExpect(jsonPath("$[0].age").value(10))
+                .andExpect(jsonPath("$[0].name").value("CEDRIC"))
+                .andExpect(jsonPath("$[0].age").value(21))
                 .andExpect(jsonPath("$[0].gender").value("male"))
-                .andExpect(jsonPath("$[0].salary").value(100000000))
-                .andExpect(jsonPath("$[1].id").isNumber())
-                .andExpect(jsonPath("$[1].name").value("manalch"))
-                .andExpect(jsonPath("$[1].age").value(21))
-                .andExpect(jsonPath("$[1].gender").value("male"))
-                .andExpect(jsonPath("$[1].salary").value(800000000));
+                .andExpect(jsonPath("$[0].salary").value(100000));
+//                .andExpect(jsonPath("$[1].id").isNumber())
+//                .andExpect(jsonPath("$[1].name").value("manalch"))
+//                .andExpect(jsonPath("$[1].age").value(21))
+//                .andExpect(jsonPath("$[1].gender").value("male"))
+//                .andExpect(jsonPath("$[1].salary").value(800000000));
     }
 
     @Test
-    void should_get_updated_employee_when_update_employee_given_employee() throws Exception {
+    void should_get_updated_company_when_given_new_company_name() throws Exception {
         //given
         Company company = new Company(1, "COSCO");
         companyRepository.save(company);

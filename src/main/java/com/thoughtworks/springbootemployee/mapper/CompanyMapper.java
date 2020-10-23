@@ -12,10 +12,12 @@ public class CompanyMapper {
         CompanyResponse companyResponse = new CompanyResponse();
 
         BeanUtils.copyProperties(company, companyResponse);
+        companyResponse.setEmployees(company.getEmployees());
+        companyResponse.setEmployeeNumber(company.getEmployeeNumber());
         return companyResponse;
     }
 
-    public Company toEntity(CompanyRequest companyRequest){
+    public Company toEntity(CompanyRequest companyRequest) {
         Company company = new Company();
         BeanUtils.copyProperties(companyRequest, company);
         return company;

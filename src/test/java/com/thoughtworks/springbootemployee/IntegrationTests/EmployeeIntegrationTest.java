@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ActiveProfiles("test")
 class EmployeesIntegrationTest {
 
     @Autowired
@@ -40,7 +42,7 @@ class EmployeesIntegrationTest {
     @Test
     void should_get_all_employees_when_get_all() throws Exception {
         //given
-        Employee employee = new Employee(1, "JC", 12, "male", 10000);
+        Employee employee = new Employee(1, "JC", 12, "male", 10000, 1);
         employeeRepository.save(employee);
 
         //when then
@@ -78,7 +80,7 @@ class EmployeesIntegrationTest {
     @Test
     void should_get_employee_with_id_1_when_search_by_id_given_employee_with_id_1() throws Exception {
         //given
-        Employee employee = new Employee(1, "Janelle", 21, "female", 100000);
+        Employee employee = new Employee(1, "Janelle", 21, "female", 100000, 1);
         employeeRepository.save(employee);
 
         //when then
@@ -94,7 +96,7 @@ class EmployeesIntegrationTest {
     @Test
     void should_get_updated_employee_when_update_employee_given_employee() throws Exception {
         //given
-        Employee employee = new Employee(1, "Janelle", 21, "female", 100000);
+        Employee employee = new Employee(1, "Janelle", 21, "female", 100000, 1);
         employeeRepository.save(employee);
 
         String employeeJSON = "{\n" +
@@ -120,7 +122,7 @@ class EmployeesIntegrationTest {
     @Test
     void should_delete_employee_when_deleted_given_employee_id_1() throws Exception {
         //given
-        Employee employee = new Employee(1, "Janelle", 21, "female", 100000);
+        Employee employee = new Employee(1, "Janelle", 21, "female", 100000, 1);
         employeeRepository.save(employee);
 
         //when then
@@ -133,9 +135,9 @@ class EmployeesIntegrationTest {
     @Test
     void should_return_all_male_when_filtered_gender_given_male_() throws Exception {
         //given
-        Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000);
-        Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000);
-        Employee thirdEmployee = new Employee(3, "Jc", 20, "male", 2000000);
+        Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000, 1);
+        Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000, 1);
+        Employee thirdEmployee = new Employee(3, "Jc", 20, "male", 2000000, 1);
         employeeRepository.save(firstEmployee);
         employeeRepository.save(secondEmployee);
         employeeRepository.save(thirdEmployee);
@@ -156,10 +158,10 @@ class EmployeesIntegrationTest {
     @Test
     void should_return_3_employees_filtered_by_page_and_pageSize__given_4_employees_page_0_and_pageSize_3() throws Exception {
         //given
-        Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000);
-        Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000);
-        Employee thirdEmployee = new Employee(3, "Cedric", 20, "male", 2000000);
-        Employee fourthEmployee = new Employee(4, "Joseph", 20, "male", 2000000);
+        Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000, 1);
+        Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000, 1);
+        Employee thirdEmployee = new Employee(3, "Cedric", 20, "male", 2000000, 1);
+        Employee fourthEmployee = new Employee(4, "Joseph", 20, "male", 2000000, 1);
         employeeRepository.save(firstEmployee);
         employeeRepository.save(secondEmployee);
         employeeRepository.save(thirdEmployee);
