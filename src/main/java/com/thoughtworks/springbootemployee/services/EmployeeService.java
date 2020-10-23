@@ -21,21 +21,17 @@ import static java.util.Objects.nonNull;
 public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
-    private EmployeeMapper employeeMapper;
 
-    public EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
+    public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
-        this.employeeMapper = employeeMapper;
     }
 
-    public List<EmployeeResponse> getAll() {
-        List<Employee> employees = employeeRepository.findAll();
-        return employees.stream().map(employee -> employeeMapper.toResponse(employee)).collect(Collectors.toList());
+    public List<Employee> getAll() {
+        return employeeRepository.findAll();
     }
 
-    public EmployeeResponse create(EmployeeRequest newEmployeeRequest) {
-        Employee employee = employeeRepository.save(employeeMapper.toEntity(newEmployeeRequest));
-        return employeeMapper.toResponse(employee);
+    public Employee create(Employee newEmployee) {
+        return employeeRepository.save(newEmployee);
     }
 
     public Employee searchById(Integer id) {
@@ -80,7 +76,6 @@ public class EmployeeService {
 
     public List<Employee> getEmployeeByPageAndPageSize(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-
         return employeeRepository.findAll(pageable).toList();
     }
 }
