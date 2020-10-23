@@ -56,7 +56,7 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public void validateEmployee(Employee employee) {
+    private void validateEmployee(Employee employee) {
         if (isNull(employee.getName()) || isNull(employee.getGender())) {
             throw new InvalidEmployeeException("Employee data is not valid!");
         }
