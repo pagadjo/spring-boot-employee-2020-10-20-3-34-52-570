@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.services;
 
+import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.models.Company;
 import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.CompanyRepository;
@@ -29,7 +30,11 @@ public class CompanyService {
     }
 
     public Company searchByCompanyId(Integer companyId) {
-        return companyRepository.findById(companyId).orElse(null);
+        Company company = companyRepository.findById(companyId).orElse(null);
+        if (nonNull(company)) {
+            return company;
+        }
+        throw new CompanyNotFoundException("Company " + companyId + " not found!");
     }
 
     public List<Employee> getEmployeesByCompanyId(Integer companyId) {
@@ -42,7 +47,7 @@ public class CompanyService {
             company.setCompanyName(companyUpdate.getCompanyName());
             return companyRepository.save(company);
         }
-        return null;
+        throw new CompanyNotFoundException("Company " + companyId + " not found!");
     }
 
     public void delete(Integer companyId) {
