@@ -6,7 +6,10 @@ import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.EmployeeRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class EmployeeService {
     }
 
     public Employee create(Employee newEmployee) {
+        validateEmployee(newEmployee);
         return employeeRepository.save(newEmployee);
     }
 
@@ -37,9 +41,15 @@ public class EmployeeService {
 
     public Employee update(Integer id, Employee employeeUpdate) {
         Employee employee = searchById(id);
-        validateEmployee(employee);
-        employee.setName(employeeUpdate.getName());
-        employee.setGender(employeeUpdate.getGender());
+        if (nonNull(employeeUpdate.getName())) {
+            employee.setName(employeeUpdate.getName());
+        }
+        if (nonNull(employeeUpdate.getGender())) {
+            employee.setGender(employeeUpdate.getGender());
+        }
+        if (nonNull(employeeUpdate.getAge())) {
+            employee.setAge(employeeUpdate.getAge());
+        }
         if (nonNull(employeeUpdate.getAge())) {
             employee.setAge(employeeUpdate.getAge());
         }
@@ -49,7 +59,9 @@ public class EmployeeService {
         if (nonNull(employeeUpdate.getCompanyId())) {
             employee.setCompanyId(employeeUpdate.getCompanyId());
         }
-        return employeeRepository.save(employee);
+        employeeRepository.save(employee);
+
+        return employee;
     }
 
     private void validateEmployee(Employee employee) {
