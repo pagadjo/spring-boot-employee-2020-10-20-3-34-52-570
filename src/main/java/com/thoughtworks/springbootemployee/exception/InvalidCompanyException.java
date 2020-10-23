@@ -1,6 +1,6 @@
-package com.thoughtworks.springbootemployee.services;
+package com.thoughtworks.springbootemployee.exception;
 
-public class InvalidCompanyException extends Throwable {
+public class InvalidCompanyException extends RuntimeException {
     public InvalidCompanyException(String s) {
     }
 }
