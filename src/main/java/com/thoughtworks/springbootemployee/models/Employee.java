@@ -1,7 +1,5 @@
 package com.thoughtworks.springbootemployee.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,8 +14,6 @@ public class Employee {
     private Integer age;
     private String gender;
     private Integer salary;
-
-    @JsonIgnore
     private Integer companyId;
 
     public Employee() {
