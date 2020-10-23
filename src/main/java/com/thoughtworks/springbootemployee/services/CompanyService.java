@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
@@ -30,11 +29,8 @@ public class CompanyService {
     }
 
     public Company searchByCompanyId(Integer companyId) {
-        Company company = companyRepository.findById(companyId).orElse(null);
-        if (nonNull(company)) {
-            return company;
-        }
-        throw new CompanyNotFoundException("Company " + companyId + " not found!");
+        return companyRepository.findById(companyId)
+                .orElseThrow(() -> new CompanyNotFoundException("Company " + companyId + " not found!"));
     }
 
     public List<Employee> getEmployeesByCompanyId(Integer companyId) {
