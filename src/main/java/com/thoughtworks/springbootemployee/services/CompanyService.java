@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.services;
 
 import com.thoughtworks.springbootemployee.exception.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.exception.InvalidCompanyException;
 import com.thoughtworks.springbootemployee.models.Company;
 import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.CompanyRepository;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static java.util.Objects.nonNull;
+import static java.util.Objects.isNull;
 
 @Service
 public class CompanyService {
@@ -38,12 +39,17 @@ public class CompanyService {
     }
 
     public Company update(Integer companyId, Company companyUpdate) {
-        Company company = companyRepository.findById(companyId).orElse(null);
-        if (nonNull(company) && nonNull(companyUpdate.getCompanyName())) {
-            company.setCompanyName(companyUpdate.getCompanyName());
-            return companyRepository.save(company);
+        Company company = searchByCompanyId(companyId);
+        validateCompany(companyUpdate);
+        company.setCompanyName(companyUpdate.getCompanyName());
+        companyRepository.save(company);
+        return company;
+    }
+
+    private void validateCompany(Company companyUpdate) {
+        if (isNull(companyUpdate.getCompanyName())) {
+            throw new InvalidCompanyException("Company data is not valid!");
         }
-        throw new CompanyNotFoundException("Company " + companyId + " not found!");
     }
 
     public void delete(Integer companyId) {
