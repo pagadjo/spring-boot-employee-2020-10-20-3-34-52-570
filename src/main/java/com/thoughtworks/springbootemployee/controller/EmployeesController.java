@@ -39,7 +39,6 @@ public class EmployeesController {
     @GetMapping("/{employeeId}")
     public EmployeeResponse searchById(@PathVariable("employeeId") Integer employeeId) {
         return employeeMapper.toResponse(employeeService.searchById(employeeId));
-
     }
 
     @PutMapping("/{employeeId}")
