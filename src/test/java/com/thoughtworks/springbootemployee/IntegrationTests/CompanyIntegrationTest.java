@@ -133,18 +133,12 @@ class CompanyIntegrationTest {
 //                "    ]\n" +
 //                "}";
 
-        String jsonCompany = "{\n" +
-                "    \"companyName\":\"OOCL\"\n" +
-                "}";
+        Company company = new Company("OOCL");
+        String jsonCompany = gson.toJson(company, Company.class);
 
+        Employee employee = new Employee("Charlie", 21, "male", 100000, 2);
+        String jsonEmployee = gson.toJson(employee, Employee.class);
 
-        String jsonEmployees = "{\n" +
-                "    \"name\" : \"CEDRIC\",\n" +
-                "    \"age\" : 21,\n" +
-                "    \"gender\" : \"male\",\n" +
-                "    \"salary\" : 100000,\n" +
-                "    \"companyId\": 2\n" +
-                "}";
 
         //when then
         mockMvc.perform(post("/companies")
@@ -154,21 +148,17 @@ class CompanyIntegrationTest {
 
         mockMvc.perform(post("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonEmployees))
+                .content(jsonEmployee))
                 .andExpect(status().isCreated());
 
         mockMvc.perform(get("/companies/2/employees"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").isNumber())
-                .andExpect(jsonPath("$[0].name").value("CEDRIC"))
+                .andExpect(jsonPath("$[0].name").value("Charlie"))
                 .andExpect(jsonPath("$[0].age").value(21))
                 .andExpect(jsonPath("$[0].gender").value("male"))
-                .andExpect(jsonPath("$[0].salary").value(100000));
-//                .andExpect(jsonPath("$[1].id").isNumber())
-//                .andExpect(jsonPath("$[1].name").value("manalch"))
-//                .andExpect(jsonPath("$[1].age").value(21))
-//                .andExpect(jsonPath("$[1].gender").value("male"))
-//                .andExpect(jsonPath("$[1].salary").value(800000000));
+                .andExpect(jsonPath("$[0].salary").value(100000))
+                .andExpect(jsonPath("$[0].companyId").value(2));;
     }
 
     @Test
