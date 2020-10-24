@@ -49,8 +49,6 @@ public class CompaniesController {
     public List<EmployeeResponse> getEmployeesByCompanyId(@PathVariable("companyId") Integer companyId) {
         return companyService.getEmployeesByCompanyId(companyId)
                 .stream().map(employeeMapper::toResponse).collect(Collectors.toList());
-
-//        return companyService.getEmployeesByCompanyId(companyId).stream().map(employee -> )
     }
 
     @PutMapping("/{companyId}")
