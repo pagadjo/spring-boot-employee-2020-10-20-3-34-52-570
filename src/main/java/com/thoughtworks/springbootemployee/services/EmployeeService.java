@@ -53,9 +53,6 @@ public class EmployeeService {
         if (nonNull(employeeUpdate.getSalary())) {
             employee.setSalary(employeeUpdate.getSalary());
         }
-        if (nonNull(employeeUpdate.getCompanyId())) {
-            employee.setCompanyId(employeeUpdate.getCompanyId());
-        }
         employeeRepository.save(employee);
 
         return employee;
