@@ -1,8 +1,10 @@
 package com.thoughtworks.springbootemployee.IntegrationTests;
 
+import com.google.gson.Gson;
 import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,6 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class EmployeesIntegrationTest {
 
+    private Gson gson;
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -37,6 +41,11 @@ class EmployeesIntegrationTest {
     @AfterEach
     void tearDown() {
         employeeRepository.deleteAll();
+    }
+
+    @BeforeEach
+    void setup(){
+        gson = new Gson();
     }
 
     @Test
@@ -58,17 +67,13 @@ class EmployeesIntegrationTest {
     @Test
     void should_create_employee_when_create_given_employee() throws Exception {
         //given
-        String employeeJSON = "{\n" +
-                "    \"name\" : \"Janelle\",\n" +
-                "    \"age\" : 21,\n" +
-                "    \"gender\" : \"female\",\n" +
-                "    \"salary\" : 100000\n" +
-                "}";
+        Employee employee = new Employee("Janelle", 21, "female", 100000, 1);
+        String jsonEmployee = gson.toJson(employee, Employee.class);
 
         //when then
         mockMvc.perform(post("/employees")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(employeeJSON))
+                .content(jsonEmployee))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.name").value("Janelle"))
