@@ -104,24 +104,20 @@ class EmployeesIntegrationTest {
         Employee employee = new Employee(1, "Janelle", 21, "female", 100000, 1);
         employeeRepository.save(employee);
 
-        String employeeJSON = "{\n" +
-                "    \"name\" : \"JC\",\n" +
-                "    \"age\" : 20,\n" +
-                "    \"gender\" : \"male\",\n" +
-                "    \"salary\" : 100\n" +
-                "}";
+        Employee updateEmployee = new Employee("Charlie", 20, "male", 1000, 1);
+        String jsonEmployee = gson.toJson(updateEmployee, Employee.class);
 
         //when then
         mockMvc.perform(put("/employees/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(employeeJSON))
+                .content(jsonEmployee))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("JC"))
+                .andExpect(jsonPath("$.name").value("Charlie"))
                 .andExpect(jsonPath("$.age").value(20))
                 .andExpect(jsonPath("$.gender").value("male"))
-                .andExpect(jsonPath("$.salary").value(100));
+                .andExpect(jsonPath("$.salary").value(1000));
     }
 
     @Test
