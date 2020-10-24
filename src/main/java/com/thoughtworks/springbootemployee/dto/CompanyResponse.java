@@ -1,9 +1,11 @@
 package com.thoughtworks.springbootemployee.dto;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.thoughtworks.springbootemployee.models.Employee;
 
 import java.util.List;
 
+@JsonPropertyOrder({"companyId","companyName", "employeeNumber", "employees"})
 public class CompanyResponse {
 
     private Integer companyId;
