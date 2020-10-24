@@ -45,7 +45,7 @@ class CompanyIntegrationTest {
     }
 
     @BeforeEach
-    void setup(){
+    void setup() {
         gson = new Gson();
     }
 
@@ -76,7 +76,6 @@ class CompanyIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.companyId").isNumber())
                 .andExpect(jsonPath("$.companyName").value("OOCL"));
-//                .andExpect(jsonPath("$.employees").isNotEmpty());
     }
 
     @Test
@@ -103,7 +102,6 @@ class CompanyIntegrationTest {
         Employee employee = new Employee("Charlie", 21, "male", 100000, 2);
         String jsonEmployee = gson.toJson(employee, Employee.class);
 
-
         //when then
         mockMvc.perform(post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -122,41 +120,27 @@ class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[0].age").value(21))
                 .andExpect(jsonPath("$[0].gender").value("male"))
                 .andExpect(jsonPath("$[0].salary").value(100000))
-                .andExpect(jsonPath("$[0].companyId").value(2));;
+                .andExpect(jsonPath("$[0].companyId").value(2));
+        ;
     }
 
     @Test
     void should_get_updated_company_when_given_new_company_name() throws Exception {
         //given
-        Company company = new Company(1, "COSCO");
+        Company company = new Company("COSCO");
         companyRepository.save(company);
 
-        String companyJson = "{\n" +
-                "    \"companyName\": \"OOCL\",\n" +
-                "    \"employees\": [\n" +
-                "        {\n" +
-                "            \"name\": \"pagadjo\",\n" +
-                "            \"age\": 10,\n" +
-                "            \"gender\": \"male\",\n" +
-                "            \"salary\": 100000000\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"name\": \"manalch\",\n" +
-                "            \"age\": 21,\n" +
-                "            \"gender\": \"male\",\n" +
-                "            \"salary\": 800000000\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
+        Company updateCompany = new Company("OOCL INC");
+        String jsonCompany = gson.toJson(updateCompany, Company.class);
 
         //when then
-        mockMvc.perform(put("/companies/1")
+        mockMvc.perform(put("/companies/2")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(companyJson))
+                .content(jsonCompany))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.companyId").isNumber())
-                .andExpect(jsonPath("$.companyId").value(1))
-                .andExpect(jsonPath("$.companyName").value("OOCL"))
+                .andExpect(jsonPath("$.companyId").value(2))
+                .andExpect(jsonPath("$.companyName").value("OOCL INC"))
                 .andExpect(jsonPath("$.employees").isEmpty());
     }
 
