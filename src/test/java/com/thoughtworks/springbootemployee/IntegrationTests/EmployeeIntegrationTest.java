@@ -51,7 +51,7 @@ class EmployeesIntegrationTest {
     @Test
     void should_get_all_employees_when_get_all() throws Exception {
         //given
-        Employee employee = new Employee(1, "JC", 12, "male", 10000, 1);
+        Employee employee = new Employee(1, "JC", 12, "male", 10000);
         employeeRepository.save(employee);
 
         //when then
@@ -67,7 +67,7 @@ class EmployeesIntegrationTest {
     @Test
     void should_create_employee_when_create_given_employee() throws Exception {
         //given
-        Employee employee = new Employee("Janelle", 21, "female", 100000, 1);
+        Employee employee = new Employee("Janelle", 21, "female", 100000);
         String jsonEmployee = gson.toJson(employee, Employee.class);
 
         //when then
@@ -85,7 +85,7 @@ class EmployeesIntegrationTest {
     @Test
     void should_get_employee_with_id_1_when_search_by_id_given_employee_with_id_1() throws Exception {
         //given
-        Employee employee = new Employee(1, "Janelle", 21, "female", 100000, 1);
+        Employee employee = new Employee(1, "Janelle", 21, "female", 100000);
         employeeRepository.save(employee);
 
         //when then
@@ -101,10 +101,10 @@ class EmployeesIntegrationTest {
     @Test
     void should_get_updated_employee_when_update_employee_given_employee() throws Exception {
         //given
-        Employee employee = new Employee(1, "Janelle", 21, "female", 100000, 1);
+        Employee employee = new Employee(1, "Janelle", 21, "female", 100000);
         employeeRepository.save(employee);
 
-        Employee updateEmployee = new Employee("Charlie", 20, "male", 1000, 1);
+        Employee updateEmployee = new Employee("Charlie", 20, "male", 1000);
         String jsonEmployee = gson.toJson(updateEmployee, Employee.class);
 
         //when then
@@ -123,22 +123,22 @@ class EmployeesIntegrationTest {
     @Test
     void should_delete_employee_when_deleted_given_employee_id_1() throws Exception {
         //given
-        Employee employee = new Employee(1, "Janelle", 21, "female", 100000, 1);
+        Employee employee = new Employee("Janelle", 21, "female", 100000);
         employeeRepository.save(employee);
 
         //when then
-        mockMvc.perform(delete("/employees/{employeeId}", 1)).andExpect(status().isOk());
+        mockMvc.perform(delete("/employees/{employeeId}",9)).andExpect(status().isOk());
 
-        Employee employee1 = employeeRepository.findById(1).orElse(null);
+        Employee employee1 = employeeRepository.findById(9).orElse(null);
         assertNull(employee1);
     }
 
     @Test
     void should_return_all_male_when_filtered_gender_given_male_() throws Exception {
         //given
-        Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000, 1);
-        Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000, 1);
-        Employee thirdEmployee = new Employee(3, "Jc", 20, "male", 2000000, 1);
+        Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000);
+        Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000);
+        Employee thirdEmployee = new Employee(3, "Jc", 20, "male", 2000000);
         employeeRepository.save(firstEmployee);
         employeeRepository.save(secondEmployee);
         employeeRepository.save(thirdEmployee);
@@ -159,10 +159,10 @@ class EmployeesIntegrationTest {
     @Test
     void should_return_3_employees_filtered_by_page_and_pageSize__given_4_employees_page_0_and_pageSize_3() throws Exception {
         //given
-        Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000, 1);
-        Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000, 1);
-        Employee thirdEmployee = new Employee(3, "Cedric", 20, "male", 2000000, 1);
-        Employee fourthEmployee = new Employee(4, "Joseph", 20, "male", 2000000, 1);
+        Employee firstEmployee = new Employee(1, "Janelle", 21, "female", 10000000);
+        Employee secondEmployee = new Employee(2, "Jc", 20, "male", 2000000);
+        Employee thirdEmployee = new Employee(3, "Cedric", 20, "male", 2000000);
+        Employee fourthEmployee = new Employee(4, "Joseph", 20, "male", 2000000);
         employeeRepository.save(firstEmployee);
         employeeRepository.save(secondEmployee);
         employeeRepository.save(thirdEmployee);

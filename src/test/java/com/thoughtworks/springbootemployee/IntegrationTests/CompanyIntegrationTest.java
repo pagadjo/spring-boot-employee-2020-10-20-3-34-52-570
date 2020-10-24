@@ -2,7 +2,6 @@ package com.thoughtworks.springbootemployee.IntegrationTests;
 
 import com.google.gson.Gson;
 import com.thoughtworks.springbootemployee.models.Company;
-import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.CompanyRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +20,10 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -96,21 +98,22 @@ class CompanyIntegrationTest {
     @Test
     void should_get_employees_of_company_with_company_id_2_when_search_by_id_given_company_with_id_2() throws Exception {
         //given
-        Company company = new Company("OOCL");
-        String jsonCompany = gson.toJson(company, Company.class);
-
-        Employee employee = new Employee("Charlie", 21, "male", 100000, 2);
-        String jsonEmployee = gson.toJson(employee, Employee.class);
+        String CompanyEmployeeJson = "{\n" +
+                "        \"companyName\": \"MAERSK\",\n" +
+                "        \"employees\": [\n" +
+                "            {\n" +
+                "                \"name\": \"Charlie\",\n" +
+                "                \"age\": 21,\n" +
+                "                \"gender\": \"male\",\n" +
+                "                \"salary\": 1000\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    }";
 
         //when then
         mockMvc.perform(post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonCompany))
-                .andExpect(status().isCreated());
-
-        mockMvc.perform(post("/employees")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonEmployee))
+                .content(CompanyEmployeeJson))
                 .andExpect(status().isCreated());
 
         mockMvc.perform(get("/companies/2/employees"))
@@ -119,9 +122,7 @@ class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[0].name").value("Charlie"))
                 .andExpect(jsonPath("$[0].age").value(21))
                 .andExpect(jsonPath("$[0].gender").value("male"))
-                .andExpect(jsonPath("$[0].salary").value(100000))
-                .andExpect(jsonPath("$[0].companyId").value(2));
-        ;
+                .andExpect(jsonPath("$[0].salary").value(1000));
     }
 
     @Test
