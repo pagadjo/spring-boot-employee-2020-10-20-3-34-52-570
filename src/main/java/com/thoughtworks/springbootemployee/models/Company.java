@@ -55,10 +55,6 @@ public class Company {
         employees.add(employee);
     }
 
-    public int getEmployeeNumber() {
-        return employees.size();
-    }
-
     public Integer getCompanyId() {
         return companyId;
     }

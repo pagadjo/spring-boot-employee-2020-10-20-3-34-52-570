@@ -9,6 +9,7 @@ public class CompanyResponse {
     private Integer companyId;
     private String companyName;
     private List<Employee> employees;
+    private int employeeNumber;
 
     public CompanyResponse() {
     }
@@ -17,9 +18,11 @@ public class CompanyResponse {
         this.companyName = companyName;
     }
 
-    public CompanyResponse(Integer companyId, String companyName) {
+    public CompanyResponse(Integer companyId, String companyName, List<Employee> employees, int employeeNumber) {
         this.companyId = companyId;
         this.companyName = companyName;
+        this.employees = employees;
+        this.employeeNumber = employeeNumber;
     }
 
     public String getCompanyName() {
@@ -43,7 +46,11 @@ public class CompanyResponse {
     }
 
     public int getEmployeeNumber() {
-        return employees.size();
+        return employeeNumber;
+    }
+
+    public void setEmployeeNumber(int employeeNumber) {
+        this.employeeNumber = employeeNumber;
     }
 
     public Integer getCompanyId() {

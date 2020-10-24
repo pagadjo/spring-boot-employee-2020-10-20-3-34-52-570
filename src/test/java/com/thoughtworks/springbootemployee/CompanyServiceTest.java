@@ -76,7 +76,7 @@ class CompanyServiceTest {
         //then
         assertEquals("OOCL", company.getCompanyName());
         assertSame(newCompany, company);
-        assertEquals(2, company.getEmployeeNumber());
+        assertEquals(2, company.getEmployees().size());
     }
 
     @Test
@@ -133,7 +133,7 @@ class CompanyServiceTest {
         Company updatedCompany = companyService.update(company.getCompanyId(), expectedCompany);
         //then
         assertEquals(expectedCompany.getCompanyName(), updatedCompany.getCompanyName());
-        assertEquals(2, updatedCompany.getEmployeeNumber());
+        assertEquals(2, updatedCompany.getEmployees().size());
     }
 
     @Test
