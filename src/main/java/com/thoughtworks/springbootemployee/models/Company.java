@@ -1,6 +1,13 @@
 package com.thoughtworks.springbootemployee.models;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +20,7 @@ public class Company {
     private String companyName;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "companyId")
+    @JoinColumn(name = "company_id")
     private List<Employee> employees = new ArrayList<>();
 
     public Company() {
@@ -38,6 +45,10 @@ public class Company {
 
     public List<Employee> getEmployees() {
         return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 
     public void addEmployee(Employee employee) {

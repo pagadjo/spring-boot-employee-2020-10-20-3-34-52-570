@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
-    @Query("select new Employee(id,name,age,gender,salary,companyId) from Employee where companyId=:companyId")
+    @Query("select new Employee(id,name,age,gender,salary,company_id) from Employee where company_id=:companyId")
     List<Employee> findEmployeesByCompanyId(@Param("companyId") Integer companyId);
 }
