@@ -66,24 +66,6 @@ class CompanyIntegrationTest {
     @Test
     void should_return_created_company_when_create_a_company() throws Exception {
         //given
-//        String companyJson = "{\n" +
-//                "    \"companyName\": \"OOCL\",\n" +
-//                "    \"employees\": [\n" +
-//                "        {\n" +
-//                "            \"name\": \"pagadjo\",\n" +
-//                "            \"age\": 10,\n" +
-//                "            \"gender\": \"male\",\n" +
-//                "            \"salary\": 100000000\n" +
-//                "        },\n" +
-//                "        {\n" +
-//                "            \"name\": \"manalch\",\n" +
-//                "            \"age\": 10,\n" +
-//                "            \"gender\": \"male\",\n" +
-//                "            \"salary\": 100000000\n" +
-//                "        }\n" +
-//                "    ]\n" +
-//                "}";
-
         Company company = new Company("OOCL");
         String jsonCompany = gson.toJson(company, Company.class);
 
@@ -113,26 +95,8 @@ class CompanyIntegrationTest {
     }
 
     @Test
-    void should_get_employees_of_company_with_company_id_1_when_search_by_id_given_company_with_id_1() throws Exception {
+    void should_get_employees_of_company_with_company_id_2_when_search_by_id_given_company_with_id_2() throws Exception {
         //given
-//        String companyJson = "{\n" +
-//                "    \"companyName\": \"OOCL\",\n" +
-//                "    \"employees\": [\n" +
-//                "        {\n" +
-//                "            \"name\": \"pagadjo\",\n" +
-//                "            \"age\": 10,\n" +
-//                "            \"gender\": \"male\",\n" +
-//                "            \"salary\": 100000000\n" +
-//                "        },\n" +
-//                "        {\n" +
-//                "            \"name\": \"manalch\",\n" +
-//                "            \"age\": 21,\n" +
-//                "            \"gender\": \"male\",\n" +
-//                "            \"salary\": 800000000\n" +
-//                "        }\n" +
-//                "    ]\n" +
-//                "}";
-
         Company company = new Company("OOCL");
         String jsonCompany = gson.toJson(company, Company.class);
 
