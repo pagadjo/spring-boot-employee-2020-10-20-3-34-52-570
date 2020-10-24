@@ -1,8 +1,11 @@
 package com.thoughtworks.springbootemployee.IntegrationTests;
 
+import com.google.gson.Gson;
 import com.thoughtworks.springbootemployee.models.Company;
+import com.thoughtworks.springbootemployee.models.Employee;
 import com.thoughtworks.springbootemployee.repositories.CompanyRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class CompanyIntegrationTest {
 
+    private Gson gson;
+
     @Autowired
     private CompanyRepository companyRepository;
 
@@ -37,6 +42,11 @@ class CompanyIntegrationTest {
     @AfterEach
     void tearDown() {
         companyRepository.deleteAll();
+    }
+
+    @BeforeEach
+    void setup(){
+        gson = new Gson();
     }
 
     @Test
@@ -74,10 +84,8 @@ class CompanyIntegrationTest {
 //                "    ]\n" +
 //                "}";
 
-        String jsonCompany = "{\n" +
-                "    \"companyName\":\"OOCL\"\n" +
-                "}";
-
+        Company company = new Company("OOCL");
+        String jsonCompany = gson.toJson(company, Company.class);
 
         //when then
         mockMvc.perform(post("/companies")

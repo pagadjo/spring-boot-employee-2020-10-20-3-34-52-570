@@ -19,6 +19,10 @@ public class Company {
     public Company() {
     }
 
+    public Company(String companyName) {
+        this.companyName = companyName;
+    }
+
     public Company(Integer companyId, String companyName) {
         this.companyId = companyId;
         this.companyName = companyName;
