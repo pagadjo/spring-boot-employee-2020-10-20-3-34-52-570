@@ -14,7 +14,9 @@ import static java.util.Objects.nonNull;
 public class CompanyMapper {
     public CompanyResponse toResponse(Company company) {
         CompanyResponse companyResponse = new CompanyResponse();
+
         BeanUtils.copyProperties(company, companyResponse);
+
         boolean companyHasEmployee = nonNull(company.getEmployees());
         companyResponse.setEmployeeNumber(companyHasEmployee ? company.getEmployees().size() : 0);
         companyResponse.setEmployees(companyHasEmployee ? company.getEmployees() : Collections.emptyList());
@@ -23,6 +25,7 @@ public class CompanyMapper {
 
     public Company toEntity(CompanyRequest companyRequest) {
         Company company = new Company();
+        
         BeanUtils.copyProperties(companyRequest, company);
         return company;
     }
